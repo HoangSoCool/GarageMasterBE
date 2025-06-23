@@ -9,8 +9,15 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 //Deploy
-var mongoUri = builder.Configuration["MONGODB_URI"];
-builder.Services.AddSingleton<IMongoClient>(new MongoClient(mongoUri));
+var connectionString = builder.Configuration["MongoDB:ConnectionString"];
+if (string.IsNullOrEmpty(connectionString))
+{
+    throw new InvalidOperationException("MongoDB connection string is not configured. Please check your appsettings.json file.");
+}
+var client = new MongoClient(connectionString);
+var database = client.GetDatabase(builder.Configuration["MongoDB:DatabaseName"] ?? "GarageMasterDB");
+
+builder.Services.AddSingleton<IMongoClient>(client);
 
 builder.Services.AddCors(p => p.AddPolicy("AllowFE",
     b => b.WithOrigins("https://my-fe.onrender.com")
