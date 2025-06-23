@@ -63,7 +63,7 @@ builder.Services.AddSingleton<MongoDbContext>();
 var allowedOrigins = new[]
 {
     "http://localhost:5173",          // dev
-    "https://my-fe.onrender.com"      // prod
+    "https://garagemasterbe.onrender.com"      // prod
 };
 builder.Services.AddCors(opt =>
     opt.AddPolicy("AllowFrontend", p =>
