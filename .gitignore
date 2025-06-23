@@ -1,0 +1,49 @@
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio settings folders
+.vscode/
+.idea/
+*.vs/
+
+# Secrets & Config (remove wildcard if you want to keep appsettings.json)
+secrets.json
+appsettings.*.json
+
+# Logs
+*.log
+
+# Publish folder
+publish/
+
+# Debug symbol files
+*.pdb
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Backup & Cache
+*.bak
+*.cache
+*.dbmdl
+
+# NuGet packages
+*.nupkg
+*.snupkg
+.nuget/
+
+# Others (optional, dùng nếu bạn có những file này)
+*.tmp
+*.swp
+Thumbs.db
+Desktop.ini
