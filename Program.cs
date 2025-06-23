@@ -8,7 +8,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+//Deploy
+var mongoUri = builder.Configuration["MONGODB_URI"];
+builder.Services.AddSingleton<IMongoClient>(new MongoClient(mongoUri));
 
+builder.Services.AddCors(p => p.AddPolicy("AllowFE",
+    b => b.WithOrigins("https://my-fe.onrender.com")
+          .AllowAnyHeader()
+          .AllowAnyMethod()));
 // Đọc config JwtSettings từ appsettings.json
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 builder.Services.Configure<SmtpSettings>(
@@ -133,6 +140,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 var app = builder.Build();
+app.UseCors("AllowFE");
 
 // Middleware pipeline
 if (app.Environment.IsDevelopment())
@@ -144,8 +152,6 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty;
     });
 }
-
-app.UseHttpsRedirection();
 
 // Kích hoạt CORS trước Authentication & Authorization
 app.UseCors("AllowFrontend");
